@@ -17,5 +17,5 @@ app.use('/api/auth', authRoute);
 app.use('/api/user', userRoute);
 
 app.listen(process.env.PORT || 4000, () => {
-  console.log('Backend server running!');
+  console.log('Server running!');
 });
