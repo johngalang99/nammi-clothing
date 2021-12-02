@@ -38,6 +38,9 @@ const Button = styled.button`
   margin-top: 1rem;
   font-weight: 500;
   font-size: 1.1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
 `;
 
 const Line = styled.hr`
@@ -57,7 +60,7 @@ const Jumbotron = () => {
           Aliquam atque obcaecati laboriosam expedita natus impedit maxime.
         </Description>
         <Line />
-        <Link class="btn btn-primary btn-lg" href="#" role="button">
+        <Link href="#" role="button">
           <Button>Shop Now!</Button>
         </Link>
       </Container>
