@@ -4,28 +4,31 @@ import { Search, ShoppingCart } from '@material-ui/icons';
 import { Badge } from '@material-ui/core';
 
 const Nav = styled.div`
+  width: 100%;
   height: 50px;
+  overflow-x: hidden;
 `;
 
 const Container = styled.div`
   display: flex;
   justify-content: spaced-between;
   padding: 10px 20px;
-  border: 1px solid black;
 `;
 
 const Left = styled.div`
   flex: 1;
+  align-items: center;
 `;
 
 const Logo = styled.h1`
-  font-weight: bold;
+  font-weight: 600;
 `;
 
 const Center = styled.div`
   display: flex;
   flex: 1;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 const SearchContainer = styled.div`
