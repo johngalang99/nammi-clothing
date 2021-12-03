@@ -58,36 +58,105 @@ const Items = styled.div`
 `;
 
 const Navbar = () => {
-  return (
-    <Nav>
-      <Container>
-        <Left>
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <Logo>NAMMI</Logo>
-          </Link>
-        </Left>
-        <Center>
-          <SearchContainer>
-            <Input placeholder=" Search" />
-            <Search style={{ color: 'gray' }} />
-          </SearchContainer>
-        </Center>
-        <Right>
-          <Link to="/register" style={{ textDecoration: 'none' }}>
-            <Items>Sign Up</Items>
-          </Link>
-          <Link to="/login" style={{ textDecoration: 'none' }}>
-            <Items>Log In</Items>
-          </Link>
-          <Items>
-            <Badge badgeContent={1} color="secondary">
-              <ShoppingCart />
-            </Badge>
-          </Items>
-        </Right>
-      </Container>
-    </Nav>
-  );
+  let token = localStorage.getItem('token');
+  let admin = localStorage.getItem('isAdmin');
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('isAdmin');
+    localStorage.removeItem('userId');
+  };
+
+  if (admin === true) {
+    return (
+      <Nav>
+        <Container>
+          <Left>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <Logo>NAMMI</Logo>
+            </Link>
+          </Left>
+          <Center>
+            <SearchContainer>
+              <Input placeholder=" Search" />
+              <Search style={{ color: 'gray' }} />
+            </SearchContainer>
+          </Center>
+          <Right>
+            <Link to="/register" style={{ textDecoration: 'none' }}>
+              <Items>Add Product</Items>
+            </Link>
+            <Link to="/login" style={{ textDecoration: 'none' }}>
+              <Items onClick={logout}>Log Out</Items>
+            </Link>
+            <Items>
+              <Badge badgeContent={0} color="secondary">
+                <Link to="/cart">
+                  <ShoppingCart />
+                </Link>
+              </Badge>
+            </Items>
+          </Right>
+        </Container>
+      </Nav>
+    );
+  } else if (token) {
+    return (
+      <Nav>
+        <Container>
+          <Left>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <Logo>NAMMI</Logo>
+            </Link>
+          </Left>
+          <Center>
+            <SearchContainer>
+              <Input placeholder=" Search" />
+              <Search style={{ color: 'gray' }} />
+            </SearchContainer>
+          </Center>
+          <Right>
+            <Link to="/login" style={{ textDecoration: 'none' }}>
+              <Items onClick={logout}>Log Out</Items>
+            </Link>
+            <Items>
+              <Badge badgeContent={0} color="secondary">
+                <Link to="/cart">
+                  <ShoppingCart />
+                </Link>
+              </Badge>
+            </Items>
+          </Right>
+        </Container>
+      </Nav>
+    );
+  } else {
+    return (
+      <Nav>
+        <Container>
+          <Left>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <Logo>NAMMI</Logo>
+            </Link>
+          </Left>
+          <Center>
+            <SearchContainer>
+              <Input placeholder=" Search" />
+              <Search style={{ color: 'gray' }} />
+            </SearchContainer>
+          </Center>
+          <Right>
+            <Link to="/login" style={{ textDecoration: 'none' }}>
+              <Items>Log In</Items>
+            </Link>
+            <Link to="/register" style={{ textDecoration: 'none' }}>
+              <Items>Sign Up</Items>
+            </Link>
+          </Right>
+        </Container>
+      </Nav>
+    );
+  }
 };
 
 export default Navbar;

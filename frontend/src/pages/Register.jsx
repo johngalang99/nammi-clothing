@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -45,7 +46,7 @@ const Input = styled.input`
 const Agreement = styled.p`
   width: min(40vh, 300px);
   font-size: 0.75rem;
-  margin: 10px 0;
+  margin: 5px 0;
 `;
 
 const Button = styled.button`
@@ -134,6 +135,15 @@ const Register = () => {
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
+          </Agreement>
+          <Agreement>
+            Already have an account? <Link to="/login">Login</Link>
+          </Agreement>
+          <Agreement>
+            Back to{' '}
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              homepage
+            </Link>
           </Agreement>
           <Button onClick={handleSubmit}>Create Account</Button>
         </Form>

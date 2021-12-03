@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Container = styled.div`
@@ -42,15 +43,15 @@ const Input = styled.input`
   padding: 3px;
 `;
 
-const Link = styled.p`
+const Links = styled.p`
   width: min(40vh, 300px);
   font-size: 0.75rem;
-  margin: 10px 0;
+  margin: 5px 0;
   text-align: center;
 `;
 
 const Button = styled.button`
-  margin-top: 10px;
+  margin: 10px 0;
   border: none;
   padding: 10px;
   cursor: pointer;
@@ -103,8 +104,21 @@ const Login = () => {
             value={state.password}
           />
           <Button onClick={handleSubmit}>Login</Button>
-          <Link>Forgot password?</Link>
-          <Link>Create an account</Link>
+          <Links>
+            <Link to="#" style={{ textDecoration: 'none' }}>
+              Forgot password?
+            </Link>
+          </Links>
+          <Links>
+            <Link to="/register" style={{ textDecoration: 'none' }}>
+              Create an account
+            </Link>
+          </Links>
+          <Links>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              Back to homepage
+            </Link>
+          </Links>
         </Form>
       </Wrapper>
     </Container>
