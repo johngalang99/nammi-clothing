@@ -3,10 +3,8 @@ import styled from 'styled-components';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Add, Remove } from '@material-ui/icons';
-import { publicRequest } from '../requestMethods';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { products } from '../data';
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -144,14 +142,19 @@ const Product = () => {
             <Filter>
               <FilterTitle>Color: </FilterTitle>
               {product.color?.map((c) => (
-                <FilterColor color={c} key={c} />
+                <FilterColor color={c} key={c} onClick={() => setColor(c)} />
               ))}
             </Filter>
             <Filter>
               <FilterTitle>Size: </FilterTitle>
               <FilterSize>
                 {product.size?.map((s) => (
-                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                  <FilterSizeOption
+                    key={s}
+                    onChange={(e) => setSize(e.target.value)}
+                  >
+                    {s}
+                  </FilterSizeOption>
                 ))}
               </FilterSize>
             </Filter>

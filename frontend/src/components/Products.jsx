@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { products } from '../data';
 import Product from './Product';
 import axios from 'axios';
 
@@ -13,7 +12,7 @@ const Container = styled.div`
 
 const Products = ({ cat, filters, sort }) => {
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  // const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -29,16 +28,16 @@ const Products = ({ cat, filters, sort }) => {
     getProducts();
   }, [cat]);
 
-  useEffect(() => {
-    cat &&
-      setFilteredProducts(
-        products.filter((item) =>
-          Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value)
-          )
-        )
-      );
-  }, [products, cat, filters]);
+  // useEffect(() => {
+  //   cat &&
+  //     setFilteredProducts(
+  //       products.filter((item) =>
+  //         Object.entries(filters).every(([key, value]) =>
+  //           item[key].includes(value)
+  //         )
+  //       )
+  //     );
+  // }, [products, cat, filters]);
 
   return (
     <Container>

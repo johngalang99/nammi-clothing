@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Search, ShoppingCart } from '@material-ui/icons';
 import { Badge } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const Nav = styled.div`
   width: 100%;
@@ -61,7 +62,9 @@ const Navbar = () => {
     <Nav>
       <Container>
         <Left>
-          <Logo>NAMMI</Logo>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Logo>NAMMI</Logo>
+          </Link>
         </Left>
         <Center>
           <SearchContainer>
@@ -70,8 +73,12 @@ const Navbar = () => {
           </SearchContainer>
         </Center>
         <Right>
-          <Items>Sign Up</Items>
-          <Items>Log In</Items>
+          <Link to="/register" style={{ textDecoration: 'none' }}>
+            <Items>Sign Up</Items>
+          </Link>
+          <Link to="/login" style={{ textDecoration: 'none' }}>
+            <Items>Log In</Items>
+          </Link>
           <Items>
             <Badge badgeContent={1} color="secondary">
               <ShoppingCart />

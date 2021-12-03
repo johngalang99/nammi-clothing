@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const Container = styled.div`
   width: 100vw;
@@ -56,14 +57,52 @@ const Button = styled.button`
 `;
 
 const Login = () => {
+  const [state, setState] = useState({
+    username: '',
+    password: '',
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setState((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:4000/api/auth/login', state).then((res) => {
+      if (res.status === 200) {
+        const { _id, isAdmin, token } = res.data;
+        localStorage.setItem('isAdmin', isAdmin);
+        localStorage.setItem('userId', _id);
+        localStorage.setItem('token', token);
+        window.location.href = 'http://localhost:3000/';
+      }
+    });
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>Login</Title>
         <Form>
-          <Input placeholder="Username" />
-          <Input placeholder="Password" />
-          <Button>Login</Button>
+          <Input
+            type="string"
+            placeholder="Username"
+            id="username"
+            onChange={handleChange}
+            value={state.username}
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            id="password"
+            onChange={handleChange}
+            value={state.password}
+          />
+          <Button onClick={handleSubmit}>Login</Button>
           <Link>Forgot password?</Link>
           <Link>Create an account</Link>
         </Form>

@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -49,27 +50,92 @@ const Agreement = styled.p`
 
 const Button = styled.button`
   border: none;
-  padding: 20px;
+  padding: 15px 20px;
+  margin-top: 10px;
   cursor: pointer;
 `;
 
 const Register = () => {
+  const [state, setState] = useState({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    password: '',
+  });
+  let confirmPassword;
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setState((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post('http://localhost:4000/api/auth/register', state)
+      .then((data) => {
+        if (data.status === 201) {
+          window.location.href = 'http://localhost:3000/login';
+        }
+      });
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>Register</Title>
         <Form>
-          <Input placeholder="First Name" />
-          <Input placeholder="Last Name" />
-          <Input placeholder="Username" />
-          <Input placeholder="Email" />
-          <Input placeholder="Password" />
-          <Input placeholder="Confirm Password" />
+          <Input
+            type="string"
+            placeholder="First Name"
+            id="firstName"
+            onInput={handleChange}
+            value={state.firstName}
+          />
+          <Input
+            type="string"
+            placeholder="Last Name"
+            id="lastName"
+            onChange={handleChange}
+            value={state.lastName}
+          />
+          <Input
+            type="string"
+            placeholder="Username"
+            id="username"
+            onChange={handleChange}
+            value={state.username}
+          />
+          <Input
+            type="email"
+            placeholder="Email"
+            id="email"
+            onChange={handleChange}
+            value={state.email}
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            id="password"
+            onChange={handleChange}
+            value={state.password}
+          />
+          <Input
+            type="password"
+            placeholder="Confirm Password"
+            id="confirmPassword"
+            onChange={handleChange}
+            value={confirmPassword}
+          />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>Create Account</Button>
+          <Button onClick={handleSubmit}>Create Account</Button>
         </Form>
       </Wrapper>
     </Container>
