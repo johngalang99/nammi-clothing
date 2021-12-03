@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AddShoppingCart, RemoveRedEye } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 const Info = styled.div`
   opacity: 0;
@@ -66,7 +67,9 @@ const Product = ({ item }) => {
           <AddShoppingCart />
         </Icon>
         <Icon>
-          <RemoveRedEye />
+          <Link to={`/product/${item._id}`}>
+            <RemoveRedEye />
+          </Link>
         </Icon>
       </Info>
     </Container>

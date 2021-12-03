@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Add, Remove } from '@material-ui/icons';
+import { publicRequest } from '../requestMethods';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { products } from '../data';
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -105,45 +109,65 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+  let location = useLocation();
+  const id = location.pathname.split('/')[2];
+  const [product, setProduct] = useState({});
+  const [amount, setAmount] = useState(1);
+  const [color, setColor] = useState('');
+  const [size, setSize] = useState('');
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:4000/api/products/find/${id}`
+        );
+        setProduct(res.data);
+      } catch {}
+    };
+    getProduct();
+  }, [id]);
+
   return (
     <Container>
       <Navbar />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/431084/item/goods_48_431084.jpg?width=1008&impolicy=quality_75" />
+          <Image src={product.img} />
         </ImgContainer>
         <InfoContainer>
-          <Title>COTTON MODAL OPEN COLLAR SHORT SLEEVE SHIRT</Title>
-          <Desc>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non tempora
-            quidem veniam doloribus magnam placeat atque eos, hic consectetur
-            perferendis incidunt quisquam rerum dolorem temporibus pariatur?
-            Cumque sequi pariatur quasi.
-          </Desc>
-          <Price>590 php</Price>
+          <Title>{product.title}</Title>
+          <Desc>{product.desc}</Desc>
+          <Price>{product.price}</Price>
 
           <FilterContainer>
             <Filter>
               <FilterTitle>Color: </FilterTitle>
-              <FilterColor color="yellow" />
+              {product.color?.map((c) => (
+                <FilterColor color={c} key={c} />
+              ))}
             </Filter>
             <Filter>
               <FilterTitle>Size: </FilterTitle>
               <FilterSize>
-                <FilterSizeOption value="DEFAULT">XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+                {product.size?.map((s) => (
+                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                ))}
               </FilterSize>
             </Filter>
           </FilterContainer>
 
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <Remove
+                onClick={() => {
+                  if (amount > 1) {
+                    setAmount(amount - 1);
+                  }
+                }}
+              />
+              <Amount>{amount}</Amount>
+              <Add onClick={() => setAmount(amount + 1)} />
             </AmountContainer>
             <Button>ADD TO CART</Button>
           </AddContainer>
