@@ -29,10 +29,11 @@ router.post('/add', verifyTokenAndAuth, async (req, res) => {
         //product exists in the cart, update the quantity
         let productItem = cart.products[productIndex];
         productItem.quantity += quantity;
-        cart.totalAmount = productItem.quantity * productItem.price;
+        cart.totalAmount += quantity * price;
       } else {
         //product does not exists in cart, add new item
         cart.products.push({ productId, quantity, title, price, color, size });
+        cart.totalAmount += quantity * price;
       }
       cart = await cart.save();
       res.status(200).json(cart);

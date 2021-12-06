@@ -5,14 +5,25 @@ const {
 } = require('./verify');
 const Order = require('../models/Order');
 const router = require('express').Router();
+const Cart = require('../models/Cart');
 
-// Create Order
-router.post('/create', verifyToken, async (req, res) => {
-  const newOrder = new Order(req.body);
-
+// Checkout Order
+router.post('/:id/checkout', verifyToken, async (req, res) => {
   try {
-    const savedOrder = await newOrder.save();
-    res.status(200).json(savedOrder);
+    let cart = await Cart.findOne({ userId: req.params.id });
+    console.log(cart);
+    if (cart) {
+      const { userId, products, totalAmount } = cart;
+      const newOrder = await Order.create({
+        userId: userId,
+        products: products,
+        totalAmount: totalAmount,
+      });
+      await Cart.findByIdAndDelete({ _id: cart._id });
+      res.status(200).json(newOrder);
+    } else {
+      return `no products in cart`;
+    }
   } catch (error) {
     res.status(500).json(error);
   }
