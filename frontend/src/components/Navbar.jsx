@@ -60,6 +60,7 @@ const Items = styled.div`
 const Navbar = () => {
   let token = localStorage.getItem('token');
   let admin = localStorage.getItem('isAdmin');
+  let userId = localStorage.getItem('userId');
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -91,7 +92,7 @@ const Navbar = () => {
             </Link>
             <Items>
               <Badge badgeContent={0} color="secondary">
-                <Link to="/cart">
+                <Link to={`/cart/${userId}`}>
                   <ShoppingCart />
                 </Link>
               </Badge>
@@ -121,7 +122,7 @@ const Navbar = () => {
             </Link>
             <Items>
               <Badge badgeContent={0} color="secondary">
-                <Link to="/cart">
+                <Link to={`/cart/${userId}`}>
                   <ShoppingCart />
                 </Link>
               </Badge>

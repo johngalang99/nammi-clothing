@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Add, Remove } from '@material-ui/icons';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const Container = styled.div``;
 
@@ -146,6 +148,31 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  let token = localStorage.getItem('token');
+  let location = useLocation();
+  const id = location.pathname.split('/')[2];
+  const [cart, setCart] = useState({});
+
+  useEffect(() => {
+    const getCart = async () => {
+      try {
+        const res = await axios.get(`http://localhost:4000/api/cart/${id}`, {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+          params: {
+            id: id,
+          },
+        });
+        console.log(res.data);
+        setCart(res.data);
+      } catch {}
+    };
+    getCart();
+  }, [id]);
+
+  const handleCheckOut = () => {};
+
   return (
     <Container>
       <Navbar />
@@ -161,38 +188,40 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetails>
-                <Image src="https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/437242/item/goods_69_437242.jpg?width=1600&impolicy=quality_75" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> GRAY SHIRT
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 253434
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Size:</b> M
-                  </ProductSize>
-                </Details>
-              </ProductDetails>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>1</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>Php 290</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cart.products?.map((product) => (
+              <Product key={product._id}>
+                <ProductDetails>
+                  <Image src={product.img} />
+                  <Details>
+                    <ProductName>
+                      <b>Product:</b> {product.title}
+                    </ProductName>
+                    <ProductId>
+                      <b>ID:</b> {product._id}
+                    </ProductId>
+                    <ProductColor color={product.color} />
+                    <ProductSize>
+                      <b>Size:</b> {product.size}
+                    </ProductSize>
+                  </Details>
+                </ProductDetails>
+                <PriceDetail>
+                  <ProductAmountContainer>
+                    <Add />
+                    <ProductAmount>1</ProductAmount>
+                    <Remove />
+                  </ProductAmountContainer>
+                  <ProductPrice>Php {product.price}</ProductPrice>
+                </PriceDetail>
+              </Product>
+            ))}
             <Hr />
           </Info>
           <Summary>
             <SummaryTitle>Summary</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>Php 290</SummaryItemPrice>
+              <SummaryItemPrice>Php {cart.totalAmount}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -204,9 +233,9 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>Php 295</SummaryItemPrice>
+              <SummaryItemPrice>Php {cart.totalAmount - 5}</SummaryItemPrice>
             </SummaryItem>
-            <Button>Checkout Now</Button>
+            <Button onClick={handleCheckOut}>Checkout Now</Button>
           </Summary>
         </Bottom>
       </Wrapper>

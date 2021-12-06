@@ -19,6 +19,7 @@ router.post('/add', verifyTokenAndAuth, async (req, res) => {
     }
     const price = product.price;
     const title = product.title;
+    const img = product.img;
 
     if (cart) {
       let productIndex = cart.products.findIndex(
@@ -32,7 +33,15 @@ router.post('/add', verifyTokenAndAuth, async (req, res) => {
         cart.totalAmount += quantity * price;
       } else {
         //product does not exists in cart, add new item
-        cart.products.push({ productId, quantity, title, price, color, size });
+        cart.products.push({
+          productId,
+          quantity,
+          title,
+          img,
+          price,
+          color,
+          size,
+        });
         cart.totalAmount += quantity * price;
       }
       cart = await cart.save();
@@ -41,7 +50,7 @@ router.post('/add', verifyTokenAndAuth, async (req, res) => {
       //no cart for user, create new cart
       const newCart = await Cart.create({
         userId: userId,
-        products: [{ productId, title, color, size, price, quantity }],
+        products: [{ productId, title, color, size, price, img, quantity }],
         totalAmount: quantity * price,
       });
       res.status(200).json(newCart);
@@ -76,9 +85,9 @@ router.delete('/:id/delete', verifyTokenAndAuth, async (req, res) => {
 });
 
 // Get User Cart
-router.get('/find/:userId', verifyTokenAndAuth, async (req, res) => {
+router.get('/:id', verifyTokenAndAuth, async (req, res) => {
   try {
-    const cart = await Cart.findOne({ userId: req.params.userId });
+    const cart = await Cart.findOne({ userId: req.params.id });
     res.status(200).json(cart);
   } catch (error) {
     res.status(500).json(error);
