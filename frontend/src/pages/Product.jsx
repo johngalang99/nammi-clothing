@@ -108,21 +108,22 @@ const Button = styled.button`
 
 const Product = () => {
   let location = useLocation();
+  let token = localStorage.getItem('token');
+  let userId = localStorage.getItem('userId');
   const id = location.pathname.split('/')[2];
   const [product, setProduct] = useState({});
   const [amount, setAmount] = useState(1);
   const [color, setColor] = useState('');
   const [size, setSize] = useState('');
 
+  console.log(id, amount, color, size);
+
   const addItem = {
-    userId: '',
-    products: [
-      {
-        productId: '',
-        title: '',
-        color: '',
-      },
-    ],
+    userId: userId,
+    productId: id,
+    quantity: amount,
+    size: size,
+    color: color,
   };
 
   useEffect(() => {
@@ -137,7 +138,14 @@ const Product = () => {
     getProduct();
   }, [id]);
 
-  const addToCartHandler = () => {};
+  const addToCartHandler = async (e) => {
+    e.preventDefault();
+    await axios.post('http://localhost:4000/api/cart/add', addItem, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+  };
 
   return (
     <Container>
@@ -160,14 +168,9 @@ const Product = () => {
             </Filter>
             <Filter>
               <FilterTitle>Size: </FilterTitle>
-              <FilterSize>
+              <FilterSize onChange={(e) => setSize(e.target.value)}>
                 {product.size?.map((s) => (
-                  <FilterSizeOption
-                    key={s}
-                    onChange={(e) => setSize(e.target.value)}
-                  >
-                    {s}
-                  </FilterSizeOption>
+                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
                 ))}
               </FilterSize>
             </Filter>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Search, ShoppingCart } from '@material-ui/icons';
 import { Badge } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Nav = styled.div`
   width: 100%;
@@ -68,6 +69,25 @@ const Navbar = () => {
     localStorage.removeItem('userId');
   };
 
+  const [badge, setBadge] = useState('');
+
+  useEffect(() => {
+    const updateBadge = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:4000/api/cart/${userId}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setBadge(res.data.products.length);
+      } catch {}
+    };
+    updateBadge();
+  }, []);
+
   if (admin === true) {
     return (
       <Nav>
@@ -91,7 +111,7 @@ const Navbar = () => {
               <Items onClick={logout}>Log Out</Items>
             </Link>
             <Items>
-              <Badge badgeContent={0} color="secondary">
+              <Badge badgeContent={badge} color="secondary">
                 <Link to={`/cart/${userId}`}>
                   <ShoppingCart />
                 </Link>
@@ -121,7 +141,7 @@ const Navbar = () => {
               <Items onClick={logout}>Log Out</Items>
             </Link>
             <Items>
-              <Badge badgeContent={0} color="secondary">
+              <Badge badgeContent={badge} color="secondary">
                 <Link to={`/cart/${userId}`}>
                   <ShoppingCart />
                 </Link>

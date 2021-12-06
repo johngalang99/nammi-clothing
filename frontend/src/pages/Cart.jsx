@@ -160,11 +160,7 @@ const Cart = () => {
           headers: {
             authorization: `Bearer ${token}`,
           },
-          params: {
-            id: id,
-          },
         });
-        console.log(res.data);
         setCart(res.data);
       } catch {}
     };
