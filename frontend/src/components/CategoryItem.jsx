@@ -50,7 +50,7 @@ const Button = styled.button`
 `;
 
 const CategoryItem = ({ item }) => {
-  const { img, title, cat } = item;
+  const { img, title } = item;
   return (
     <Container>
       <Link to={`/products/`}>

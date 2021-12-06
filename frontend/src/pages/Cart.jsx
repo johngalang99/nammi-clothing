@@ -145,10 +145,12 @@ const Button = styled.button`
   background-color: black;
   color: white;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 const Cart = () => {
   let token = localStorage.getItem('token');
+  let userId = localStorage.getItem('userId');
   let location = useLocation();
   const id = location.pathname.split('/')[2];
   const [cart, setCart] = useState({});
@@ -167,7 +169,20 @@ const Cart = () => {
     getCart();
   }, [id]);
 
-  const handleCheckOut = () => {};
+  const handleCheckOut = async (e) => {
+    const checkOut = await axios.post(
+      `http://localhost:4000/api/order/${userId}/checkout`,
+      {},
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (checkOut) {
+      alert(`Items Successfully Ordered`);
+    }
+  };
 
   return (
     <Container>
@@ -177,14 +192,14 @@ const Cart = () => {
         <Top>
           <TopButton>Continue Shopping</TopButton>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Shopping Bag {cart?.products?.length}</TopText>
             <TopText>Your Wishlist</TopText>
           </TopTexts>
-          <TopButton type="filled">Checkout</TopButton>
+          <TopButton>Back to Home</TopButton>
         </Top>
         <Bottom>
           <Info>
-            {cart.products?.map((product) => (
+            {cart?.products?.map((product) => (
               <Product key={product._id}>
                 <ProductDetails>
                   <Image src={product.img} />
@@ -217,7 +232,7 @@ const Cart = () => {
             <SummaryTitle>Summary</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>Php {cart.totalAmount}</SummaryItemPrice>
+              <SummaryItemPrice>Php {cart?.totalAmount || 0}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -229,7 +244,9 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>Php {cart.totalAmount - 5}</SummaryItemPrice>
+              <SummaryItemPrice>
+                Php {cart?.totalAmount - 5 || 0}
+              </SummaryItemPrice>
             </SummaryItem>
             <Button onClick={handleCheckOut}>Checkout Now</Button>
           </Summary>

@@ -11,7 +11,6 @@ const Cart = require('../models/Cart');
 router.post('/:id/checkout', verifyToken, async (req, res) => {
   try {
     let cart = await Cart.findOne({ userId: req.params.id });
-    console.log(cart);
     if (cart) {
       const { userId, products, totalAmount } = cart;
       const newOrder = await Order.create({

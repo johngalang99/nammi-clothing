@@ -141,7 +141,7 @@ const Navbar = () => {
               <Items onClick={logout}>Log Out</Items>
             </Link>
             <Items>
-              <Badge badgeContent={badge} color="secondary">
+              <Badge badgeContent={badge || 0} color="secondary">
                 <Link to={`/cart/${userId}`}>
                   <ShoppingCart />
                 </Link>
