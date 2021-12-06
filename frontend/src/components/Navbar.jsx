@@ -87,8 +87,7 @@ const Navbar = () => {
     };
     updateBadge();
   }, []);
-
-  if (admin === true) {
+  if (admin) {
     return (
       <Nav>
         <Container>
@@ -104,14 +103,17 @@ const Navbar = () => {
             </SearchContainer>
           </Center>
           <Right>
-            <Link to="/register" style={{ textDecoration: 'none' }}>
+            <Link to="/products" style={{ textDecoration: 'none' }}>
+              <Items>Shop</Items>
+            </Link>
+            <Link to="/add-product" style={{ textDecoration: 'none' }}>
               <Items>Add Product</Items>
             </Link>
             <Link to="/login" style={{ textDecoration: 'none' }}>
               <Items onClick={logout}>Log Out</Items>
             </Link>
             <Items>
-              <Badge badgeContent={badge} color="secondary">
+              <Badge badgeContent={badge || 0} color="secondary">
                 <Link to={`/cart/${userId}`}>
                   <ShoppingCart />
                 </Link>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Add, Remove } from '@material-ui/icons';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Container = styled.div``;
@@ -190,12 +190,20 @@ const Cart = () => {
       <Wrapper>
         <Title>Your Cart</Title>
         <Top>
-          <TopButton>Continue Shopping</TopButton>
+          <TopButton>
+            <Link to="/products" style={{ textDecoration: 'none' }}>
+              Continue Shopping
+            </Link>
+          </TopButton>
           <TopTexts>
             <TopText>Shopping Bag {cart?.products?.length}</TopText>
             <TopText>Your Wishlist</TopText>
           </TopTexts>
-          <TopButton>Back to Home</TopButton>
+          <TopButton>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              Back to Home
+            </Link>
+          </TopButton>
         </Top>
         <Bottom>
           <Info>

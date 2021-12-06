@@ -116,8 +116,6 @@ const Product = () => {
   const [color, setColor] = useState('');
   const [size, setSize] = useState('');
 
-  console.log(id, amount, color, size);
-
   const addItem = {
     userId: userId,
     productId: id,

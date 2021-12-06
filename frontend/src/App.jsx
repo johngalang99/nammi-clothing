@@ -1,13 +1,22 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Product from './pages/Product';
 import ProductList from './pages/ProductList';
 import Register from './pages/Register';
 import Cart from './pages/Cart';
+import AddProduct from './pages/AddProduct';
 
 const App = () => {
+  const token = localStorage.getItem('token');
+  const isAdmin = localStorage.getItem('isAdmin');
+
   return (
     <>
       <Router>
@@ -25,10 +34,15 @@ const App = () => {
             <Cart />
           </Route>
           <Route path="/login">
+            {token ? <Redirect to="/" /> : <Login />}
             <Login />
           </Route>
           <Route path="/register">
+            {token ? <Redirect to="/" /> : <Register />}
             <Register />
+          </Route>
+          <Route path="/add-product">
+            {isAdmin == true ? <Redirect to="/" /> : <AddProduct />}
           </Route>
         </Switch>
       </Router>

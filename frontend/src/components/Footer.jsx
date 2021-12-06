@@ -6,6 +6,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import MapIcon from '@mui/icons-material/Map';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -100,14 +101,30 @@ const Footer = () => {
       <Center>
         <Title>Navigate</Title>
         <List>
-          <ListItem>Home</ListItem>
-          <ListItem>About Us</ListItem>
-          <ListItem>Shop</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>Register</ListItem>
-          <ListItem>Login</ListItem>
-          <ListItem>Careers</ListItem>
-          <ListItem>Terms</ListItem>
+          <ListItem>
+            <Link to="/">Home</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="#">About Us</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/products">Shop</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/cart">Cart</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/register">Register</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/login">Login</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="#">Careers</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="#">Terms</Link>
+          </ListItem>
         </List>
       </Center>
       <Right>

@@ -60,7 +60,7 @@ const Jumbotron = () => {
           Aliquam atque obcaecati laboriosam expedita natus impedit maxime.
         </Description>
         <Line />
-        <Link href="#" role="button">
+        <Link href="/products" role="button">
           <Button>Shop Now!</Button>
         </Link>
       </Container>

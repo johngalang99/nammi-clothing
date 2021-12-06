@@ -17,6 +17,7 @@ const verifyToken = (req, res, next) => {
       }
     );
   } else {
+    en;
     return res.status(401).json('No authentication!');
   }
 };
