@@ -4,16 +4,47 @@ const {
   verifyTokenAndAdmin,
 } = require('./verify');
 const Cart = require('../models/Cart');
+const Product = require('../models/Product');
 
 const router = require('express').Router();
 
-// Create Cart
-router.post('/create', verifyToken, async (req, res) => {
-  const newCart = new Cart(req.body);
-
+// add to cart/update cart
+router.post('/add', verifyTokenAndAuth, async (req, res) => {
+  const { userId, productId, color, size, quantity } = req.body;
   try {
-    const savedCart = await newCart.save();
-    res.status(200).json(savedCart);
+    let cart = await Cart.findOne({ userId: userId });
+    let product = await Product.findById({ _id: productId });
+    if (!product) {
+      return `no product`;
+    }
+    const price = product.price;
+    const title = product.title;
+
+    if (cart) {
+      let productIndex = cart.products.findIndex(
+        (p) => p.productId == req.body.productId
+      );
+
+      if (productIndex > -1) {
+        //product exists in the cart, update the quantity
+        let productItem = cart.products[productIndex];
+        productItem.quantity += quantity;
+        cart.totalAmount = productItem.quantity * productItem.price;
+      } else {
+        //product does not exists in cart, add new item
+        cart.products.push({ productId, quantity, title, price, color, size });
+      }
+      cart = await cart.save();
+      res.status(200).json(cart);
+    } else {
+      //no cart for user, create new cart
+      const newCart = await Cart.create({
+        userId: userId,
+        products: [{ productId, title, color, size, price, quantity }],
+        totalAmount: quantity * price,
+      });
+      res.status(200).json(newCart);
+    }
   } catch (error) {
     res.status(500).json(error);
   }

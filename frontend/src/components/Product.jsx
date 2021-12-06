@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AddShoppingCart, RemoveRedEye } from '@material-ui/icons';
+import {
+  AddShoppingCart,
+  FavoriteBorderOutlined,
+  RemoveRedEye,
+} from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 const Info = styled.div`
@@ -20,8 +24,8 @@ const Info = styled.div`
 
 const Container = styled.div`
   flex: 1;
-  margin: 5px;
-  min-width: 350px;
+  margin: 20px;
+  min-width: 300px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -70,6 +74,9 @@ const Product = ({ item }) => {
           <Link to={`/product/${item._id}`}>
             <RemoveRedEye />
           </Link>
+        </Icon>
+        <Icon>
+          <FavoriteBorderOutlined />
         </Icon>
       </Info>
     </Container>

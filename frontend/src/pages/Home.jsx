@@ -10,8 +10,8 @@ const Home = () => {
     <div>
       <Navbar />
       <Jumbotron />
-      <Products />
       <Categories />
+      <Products />
       <Footer />
     </div>
   );

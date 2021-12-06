@@ -114,6 +114,17 @@ const Product = () => {
   const [color, setColor] = useState('');
   const [size, setSize] = useState('');
 
+  const addItem = {
+    userId: '',
+    products: [
+      {
+        productId: '',
+        title: '',
+        color: '',
+      },
+    ],
+  };
+
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -125,6 +136,8 @@ const Product = () => {
     };
     getProduct();
   }, [id]);
+
+  const addToCartHandler = () => {};
 
   return (
     <Container>
@@ -172,7 +185,7 @@ const Product = () => {
               <Amount>{amount}</Amount>
               <Add onClick={() => setAmount(amount + 1)} />
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={addToCartHandler}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

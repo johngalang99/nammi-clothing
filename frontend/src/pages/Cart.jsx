@@ -187,31 +187,6 @@ const Cart = () => {
               </PriceDetail>
             </Product>
             <Hr />
-            <Product>
-              <ProductDetails>
-                <Image src="https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/437242/item/goods_69_437242.jpg?width=1600&impolicy=quality_75" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> GRAY SHIRT
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 253434
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Size:</b> M
-                  </ProductSize>
-                </Details>
-              </ProductDetails>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>1</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>Php 290</ProductPrice>
-              </PriceDetail>
-            </Product>
           </Info>
           <Summary>
             <SummaryTitle>Summary</SummaryTitle>

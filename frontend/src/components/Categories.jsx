@@ -12,7 +12,7 @@ const Container = styled.div`
 const Categories = () => {
   return (
     <Container>
-      {categories.map((item) => (
+      {categories?.map((item) => (
         <CategoryItem item={item} key={item.id} />
       ))}
     </Container>
