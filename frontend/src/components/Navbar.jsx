@@ -67,27 +67,30 @@ const Navbar = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('isAdmin');
     localStorage.removeItem('userId');
+    window.location.href = 'http://localhost:3000/login';
   };
 
   const [badge, setBadge] = useState('');
 
   useEffect(() => {
-    const updateBadge = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:4000/api/cart/${userId}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setBadge(res.data.products.length);
-      } catch {}
-    };
-    updateBadge();
+    if (token) {
+      const updateBadge = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:4000/api/cart/${userId}`,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setBadge(res.data.products.length);
+        } catch (error) {}
+      };
+      updateBadge();
+    }
   }, []);
-  if (admin) {
+  if (JSON.parse(admin) === true) {
     return (
       <Nav>
         <Container>

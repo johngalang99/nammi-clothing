@@ -53,9 +53,9 @@ router.delete('/:id/delete', verifyTokenAndAdmin, async (req, res) => {
 });
 
 // Get User Order
-router.get('/:userId', verifyTokenAndAuth, async (req, res) => {
+router.get('/:id', verifyTokenAndAuth, async (req, res) => {
   try {
-    const orders = await Order.find({ userId: req.params.userId });
+    const orders = await Order.find({ id: req.params.id });
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json(error);

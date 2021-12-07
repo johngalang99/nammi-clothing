@@ -73,15 +73,21 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:4000/api/auth/login', state).then((res) => {
-      if (res.status === 200) {
-        const { _id, isAdmin, token } = res.data;
-        localStorage.setItem('isAdmin', isAdmin);
-        localStorage.setItem('userId', _id);
-        localStorage.setItem('token', token);
-        window.location.href = 'http://localhost:3000/';
-      }
-    });
+    if (!state.username && !state.password) {
+      alert(`Please input credentials`);
+    } else
+      axios
+        .post('http://localhost:4000/api/auth/login', state)
+        .then((res) => {
+          const { _id, isAdmin, token } = res.data;
+          localStorage.setItem('isAdmin', isAdmin);
+          localStorage.setItem('userId', _id);
+          localStorage.setItem('token', token);
+          window.location.href = 'http://localhost:3000/';
+        })
+        .catch((error) => {
+          alert(`Invalid username or password`);
+        });
   };
 
   return (

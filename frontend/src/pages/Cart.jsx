@@ -154,17 +154,20 @@ const Cart = () => {
   let location = useLocation();
   const id = location.pathname.split('/')[2];
   const [cart, setCart] = useState({});
+  console.log(token);
 
   useEffect(() => {
     const getCart = async () => {
-      try {
-        const res = await axios.get(`http://localhost:4000/api/cart/${id}`, {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        });
-        setCart(res.data);
-      } catch {}
+      if (token) {
+        try {
+          const res = await axios.get(`http://localhost:4000/api/cart/${id}`, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          });
+          setCart(res.data);
+        } catch (error) {}
+      }
     };
     getCart();
   }, [id]);

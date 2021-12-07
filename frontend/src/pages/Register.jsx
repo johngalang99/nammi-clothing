@@ -76,13 +76,25 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post('http://localhost:4000/api/auth/register', state)
-      .then((data) => {
-        if (data.status === 201) {
-          window.location.href = 'http://localhost:3000/login';
-        }
-      });
+    if (
+      !state.firstName &&
+      !state.lastName &&
+      !state.username &&
+      !state.email &&
+      !state.password &&
+      !confirmPassword
+    ) {
+      alert(`Please completely input your details.`);
+    } else if (state.password !== confirmPassword) {
+      alert(`Password did not match.`);
+    } else
+      axios
+        .post('http://localhost:4000/api/auth/register', state)
+        .then((data) => {
+          if (data.status === 201) {
+            window.location.href = 'http://localhost:3000/login';
+          }
+        });
   };
 
   return (

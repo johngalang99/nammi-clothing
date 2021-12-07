@@ -24,7 +24,7 @@ const Container = styled.div`
 const Title = styled.h1`
   font-size: 3rem;
   margin-bottom: 3rem;
-  font-weight: 400;
+  font-weight: 600;
 `;
 
 const Description = styled.p`
