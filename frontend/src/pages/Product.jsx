@@ -60,6 +60,10 @@ const FilterColor = styled.div`
   border-radius: 50%;
   background-color: ${(props) => props.color};
   margin: 0 5px;
+  cursor: pointer;
+  &.active {
+    border: 2px solid lightblue;
+  }
 `;
 
 const FilterSize = styled.select`

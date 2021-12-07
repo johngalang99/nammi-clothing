@@ -12,6 +12,7 @@ import ProductList from './pages/ProductList';
 import Register from './pages/Register';
 import Cart from './pages/Cart';
 import AddProduct from './pages/AddProduct';
+import Orders from './pages/Orders';
 
 const App = () => {
   const token = localStorage.getItem('token');
@@ -40,6 +41,9 @@ const App = () => {
           <Route path="/register">
             {token ? <Redirect to="/" /> : <Register />}
             <Register />
+          </Route>
+          <Route path="/order/:id">
+            <Orders />
           </Route>
           <Route path="/add-product">
             {isAdmin == true ? <Redirect to="/" /> : <AddProduct />}

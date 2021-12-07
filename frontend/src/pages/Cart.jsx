@@ -196,8 +196,12 @@ const Cart = () => {
             </Link>
           </TopButton>
           <TopTexts>
-            <TopText>Shopping Bag {cart?.products?.length}</TopText>
-            <TopText>Your Wishlist</TopText>
+            <Link to={`/cart/${userId}`}>
+              <TopText>Shopping Bag</TopText>
+            </Link>
+            <Link to={`/order/${userId}`}>
+              <TopText>Your Orders</TopText>
+            </Link>
           </TopTexts>
           <TopButton>
             <Link to="/" style={{ textDecoration: 'none' }}>

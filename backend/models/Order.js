@@ -14,11 +14,17 @@ const orderSchema = new mongoose.Schema(
         title: {
           type: String,
         },
+        img: {
+          type: String,
+        },
         color: {
           type: String,
         },
         size: {
           type: String,
+        },
+        price: {
+          type: Number,
         },
         quantity: {
           type: Number,
