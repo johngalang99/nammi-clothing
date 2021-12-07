@@ -12,9 +12,9 @@ const cors = require('cors');
 dotenv.config();
 
 mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log('Connected to Database!'))
-  .catch((err) => console.log(err));
+    .connect(process.env.MONGO_URL)
+    .then(() => console.log('Connected to Database!'))
+    .catch((err) => console.log(err));
 
 app.use(express.json());
 app.use(cors());
@@ -25,5 +25,5 @@ app.use('/api/cart', cartRoute);
 app.use('/api/order', orderRoute);
 
 app.listen(process.env.PORT || 4000, () => {
-  console.log('Server running!');
+    console.log('Server running!');
 });

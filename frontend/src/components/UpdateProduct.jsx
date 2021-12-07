@@ -1,19 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import axios from 'axios';
 
 const Container = styled.div`
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(77, 77, 77, 0.8)),
-        url('https://images.unsplash.com/photo-1523380677598-64d85d015339?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
+    margin-top: 20px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
-    justify-content: center;
     align-items: center;
 `;
 const Wrapper = styled.div`
@@ -51,20 +46,37 @@ const Button = styled.button`
     cursor: pointer;
 `;
 
-const AddProduct = () => {
+const ArchiveButton = styled.button`
+    background-color: #00c400;
+    border: none;
+    padding: 15px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
+`;
+
+const UnarchiveButton = styled.button`
+    background-color: red;
+    border: none;
+    padding: 15px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
+`;
+
+const UpdateProduct = () => {
+    let location = useLocation();
+    const id = location.pathname.split('/')[2];
     let token = localStorage.getItem('token');
     let categories;
     let sizes;
     let colors;
-    const [state, setState] = useState({
-        title: '',
-        desc: '',
-        img: '',
-        categories: [],
-        size: [],
-        color: [],
-        price: '',
-    });
+    let title;
+    let desc;
+    let img;
+    let price;
+    const [state, setState] = useState({});
+    const [product, setProduct] = useState({});
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -84,47 +96,104 @@ const AddProduct = () => {
         console.log(state);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios
-            .post('http://localhost:4000/api/products/create', state, {
-                headers: {
-                    authorization: `Bearer ${token}`,
-                },
-            })
-            .then((data) => {
-                if (data.status === 200) {
-                    alert(`Product Added`);
+    useEffect(() => {
+        const getProduct = async () => {
+            try {
+                const res = await axios.get(
+                    `http://localhost:4000/api/products/find/${id}`
+                );
+                setProduct(res.data);
+            } catch {}
+        };
+        getProduct();
+    }, [id]);
+
+    const handleSubmit = async (e) => {
+        try {
+            axios.put(
+                `http://localhost:4000/api/products/${id}/update`,
+                state,
+                {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
                 }
-            });
+            );
+            alert(`Product Edited`);
+            window.location.reload();
+        } catch (error) {}
     };
+
+    const handleArchive = async (e) => {
+        if (inStock) {
+            try {
+                axios.put(
+                    `http://localhost:4000/api/products/${id}/update`,
+                    { inStock: false },
+                    {
+                        headers: {
+                            authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                alert(`Product Archived`);
+                window.location.reload();
+            } catch (error) {}
+        } else {
+            try {
+                axios.put(
+                    `http://localhost:4000/api/products/${id}/update`,
+                    { inStock: true },
+                    {
+                        headers: {
+                            authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                alert(`Product Unarchived`);
+                window.location.reload();
+            } catch (error) {}
+        }
+    };
+
+    const inStock = product?.inStock;
+
     return (
         <div>
-            <Navbar></Navbar>
             <Container>
                 <Wrapper>
-                    <Title>Add Product</Title>
+                    {inStock && (
+                        <ArchiveButton onClick={handleArchive}>
+                            Archive Product
+                        </ArchiveButton>
+                    )}
+                    {!inStock && (
+                        <UnarchiveButton onClick={handleArchive}>
+                            Unarchive Product
+                        </UnarchiveButton>
+                    )}
+                    <Title>Edit Product</Title>
                     <Form>
                         <Input
                             type="string"
                             placeholder="Title"
                             id="title"
                             onInput={handleChange}
-                            value={state.title}
+                            value={title}
                         />
                         <Input
                             type="string"
                             placeholder="Description"
                             id="desc"
                             onChange={handleChange}
-                            value={state.desc}
+                            value={desc}
                         />
                         <Input
                             type="string"
                             placeholder="Image Link"
                             id="img"
                             onChange={handleChange}
-                            value={state.img}
+                            value={img}
                         />
                         <Input
                             type="string"
@@ -152,15 +221,14 @@ const AddProduct = () => {
                             placeholder="Price"
                             id="price"
                             onChange={handleChange}
-                            value={state.price}
+                            value={price}
                         />
-                        <Button onClick={handleSubmit}>Add Product</Button>
+                        <Button onClick={handleSubmit}>Edit Product</Button>
                     </Form>
                 </Wrapper>
             </Container>
-            <Footer></Footer>
         </div>
     );
 };
 
-export default AddProduct;
+export default UpdateProduct;
