@@ -172,7 +172,8 @@ const Cart = () => {
             }
         };
         getCart();
-    });
+        return () => {};
+    }, [id, token]);
 
     const handleCheckOut = async (e) => {
         const checkOut = await axios.post(
@@ -186,6 +187,7 @@ const Cart = () => {
         );
         if (checkOut) {
             alert(`Items Successfully Ordered`);
+            window.location.href = `http://localhost:3000/order/${userId}`;
         }
     };
 
@@ -236,7 +238,9 @@ const Cart = () => {
                                 <PriceDetail>
                                     <ProductAmountContainer>
                                         <Add />
-                                        <ProductAmount>1</ProductAmount>
+                                        <ProductAmount>
+                                            {product.quantity}
+                                        </ProductAmount>
                                         <Remove />
                                     </ProductAmountContainer>
                                     <ProductPrice>

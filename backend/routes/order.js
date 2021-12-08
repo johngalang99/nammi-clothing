@@ -29,7 +29,7 @@ router.post('/:id/checkout', verifyToken, async (req, res) => {
 });
 
 // Update Order
-router.put('/:id/update', verifyTokenAndAdmin, async (req, res) => {
+router.put('/:id/update', verifyToken, async (req, res) => {
     try {
         const updatedOrder = await Order.findByIdAndUpdate(
             req.params.id,
@@ -43,7 +43,7 @@ router.put('/:id/update', verifyTokenAndAdmin, async (req, res) => {
 });
 
 // Delete Order
-router.delete('/:id/delete', verifyTokenAndAdmin, async (req, res) => {
+router.delete('/:id/delete', verifyToken, async (req, res) => {
     try {
         await Order.findByIdAndRemove(req.params.id);
         res.status(200).json('Order deleted');

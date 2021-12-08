@@ -53,6 +53,7 @@ const Info = styled.div`
 const Product = styled.div`
     display: flex;
     justify-content: space-between;
+    margin: 10px 0;
 `;
 
 const ProductDetails = styled.div`
@@ -134,7 +135,39 @@ const Order = () => {
             } catch {}
         };
         getOrder();
-    });
+    }, [id, token]);
+
+    const orderHandler = async (order) => {
+        const { isDelivered, _id } = order;
+        if (!isDelivered) {
+            try {
+                axios.put(
+                    `http://localhost:4000/api/order/${_id}/update`,
+                    { isDelivered: true },
+                    {
+                        headers: {
+                            authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                alert(`Order Received!`);
+                console.log(order);
+                window.location.reload();
+            } catch (error) {}
+        } else {
+            try {
+                axios.delete(`http://localhost:4000/api/order/${_id}/delete`, {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
+                });
+                alert(`Order Deleted`);
+                window.location.reload();
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
 
     if (loading) {
         return `loading...`;
@@ -169,6 +202,9 @@ const Order = () => {
                     </Top>
                     <Bottom>
                         <Info>
+                            {orders.length === 0 && (
+                                <Title>You have no orders yet.</Title>
+                            )}
                             {orders?.map((order) => (
                                 <OrderContainer key={order._id}>
                                     {order?.products?.map((product) => (
@@ -193,7 +229,9 @@ const Order = () => {
                                                     </ProductSize>
                                                     <ProductSize>
                                                         <b>Status:</b>{' '}
-                                                        {order?.status}
+                                                        {order?.isDelivered
+                                                            ? `Delivered`
+                                                            : `Pending`}
                                                     </ProductSize>
                                                 </Details>
                                             </ProductDetails>
@@ -201,6 +239,23 @@ const Order = () => {
                                                 <ProductPrice>
                                                     Php {product?.price}
                                                 </ProductPrice>
+                                                {order?.isDelivered ? (
+                                                    <button
+                                                        onClick={() =>
+                                                            orderHandler(order)
+                                                        }
+                                                    >
+                                                        Delete Order
+                                                    </button>
+                                                ) : (
+                                                    <button
+                                                        onClick={() =>
+                                                            orderHandler(order)
+                                                        }
+                                                    >
+                                                        Order Received
+                                                    </button>
+                                                )}
                                             </PriceDetail>
                                         </Product>
                                     ))}

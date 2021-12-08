@@ -62,9 +62,7 @@ const FilterColor = styled.div`
     background-color: ${(props) => props.color};
     margin: 0 5px;
     cursor: pointer;
-    &.active {
-        border: 2px solid lightblue;
-    }
+    border: 2px solid black;
 `;
 
 const FilterSize = styled.select`
@@ -143,15 +141,23 @@ const Product = () => {
     }, [id]);
 
     const addToCartHandler = async () => {
-        if (token) {
-            await axios.post('http://localhost:4000/api/cart/add', addItem, {
-                headers: {
-                    authorization: `Bearer ${token}`,
-                },
-            });
-        } else {
+        if (!token) {
             alert(`Login first to continue.`);
             window.location.href = 'http://localhost:3000/login';
+        } else if (!addItem.color || !addItem.size) {
+            alert(`Please complete product details before adding to cart`);
+        } else {
+            await axios.post(
+                `http://localhost:4000/api/cart/add/${userId}`,
+                addItem,
+                {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            alert(`Product Added`);
+            window.location.reload();
         }
     };
 
@@ -166,7 +172,6 @@ const Product = () => {
                     <Title>{product.title}</Title>
                     <Desc>{product.desc}</Desc>
                     <Price>{product.price}</Price>
-                    {console.log(addItem)}
                     <FilterContainer>
                         <Filter>
                             <FilterTitle>Color: </FilterTitle>

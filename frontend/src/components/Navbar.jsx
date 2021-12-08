@@ -75,7 +75,7 @@ const Navbar = () => {
             };
             updateBadge();
         }
-    });
+    }, [token, userId]);
 
     return (
         <Nav>

@@ -62,7 +62,7 @@ const Users = () => {
             } catch (err) {}
         };
         getProducts();
-    });
+    }, [token]);
 
     const makeAdmin = async (id) => {
         try {
