@@ -86,7 +86,7 @@ const Register = () => {
             !state.confirmPassword
         ) {
             alert(`Please completely input your details.`);
-        } else if (state.password != state.confirmPassword) {
+        } else if (state.password !== state.confirmPassword) {
             alert(`Password did not match.`);
         } else
             axios

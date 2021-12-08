@@ -173,7 +173,7 @@ const Cart = () => {
             }
         };
         getCart();
-    }, [id]);
+    });
 
     const handleCheckOut = async (e) => {
         const checkOut = await axios.post(

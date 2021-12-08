@@ -27,7 +27,7 @@ const Products = ({ cat, filters, sort }) => {
             } catch (err) {}
         };
         getProducts();
-    }, [cat]);
+    });
 
     // useEffect(() => {
     //   cat &&

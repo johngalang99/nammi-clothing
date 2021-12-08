@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Add, Remove } from '@material-ui/icons';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -135,7 +134,8 @@ const Order = () => {
             } catch {}
         };
         getOrder();
-    }, [id]);
+    });
+
     if (loading) {
         return `loading...`;
     } else {
