@@ -154,7 +154,6 @@ const Cart = () => {
     let location = useLocation();
     const id = location.pathname.split('/')[2];
     const [cart, setCart] = useState({});
-    console.log(token);
 
     useEffect(() => {
         const getCart = async () => {

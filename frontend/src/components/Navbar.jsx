@@ -76,6 +76,7 @@ const Navbar = () => {
             updateBadge();
         }
     });
+
     return (
         <Nav>
             <Container>

@@ -72,7 +72,6 @@ const AddProduct = () => {
             ...prevState,
             [id]: value,
         }));
-        console.log(state);
     };
 
     const toArray = (e) => {
@@ -81,7 +80,6 @@ const AddProduct = () => {
             ...prevState,
             [id]: value.split(' '),
         }));
-        console.log(state);
     };
 
     const handleSubmit = (e) => {

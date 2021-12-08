@@ -47,7 +47,7 @@ const Button = styled.button`
 `;
 
 const ArchiveButton = styled.button`
-    background-color: #00c400;
+    background-color: #ff4343;
     border: none;
     padding: 15px 20px;
     margin-top: 10px;
@@ -56,7 +56,7 @@ const ArchiveButton = styled.button`
 `;
 
 const UnarchiveButton = styled.button`
-    background-color: red;
+    background-color: #00c400;
     border: none;
     padding: 15px 20px;
     margin-top: 10px;
@@ -84,7 +84,6 @@ const UpdateProduct = () => {
             ...prevState,
             [id]: value,
         }));
-        console.log(state);
     };
 
     const toArray = (e) => {
@@ -93,7 +92,6 @@ const UpdateProduct = () => {
             ...prevState,
             [id]: value.split(' '),
         }));
-        console.log(state);
     };
 
     useEffect(() => {

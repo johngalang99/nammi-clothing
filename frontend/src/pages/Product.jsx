@@ -142,13 +142,17 @@ const Product = () => {
         getProduct();
     }, [id]);
 
-    const addToCartHandler = async (e) => {
-        e.preventDefault();
-        await axios.post('http://localhost:4000/api/cart/add', addItem, {
-            headers: {
-                authorization: `Bearer ${token}`,
-            },
-        });
+    const addToCartHandler = async () => {
+        if (token) {
+            await axios.post('http://localhost:4000/api/cart/add', addItem, {
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+            });
+        } else {
+            alert(`Login first to continue.`);
+            window.location.href = 'http://localhost:3000/login';
+        }
     };
 
     return (
@@ -162,7 +166,7 @@ const Product = () => {
                     <Title>{product.title}</Title>
                     <Desc>{product.desc}</Desc>
                     <Price>{product.price}</Price>
-
+                    {console.log(addItem)}
                     <FilterContainer>
                         <Filter>
                             <FilterTitle>Color: </FilterTitle>
