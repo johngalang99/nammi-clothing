@@ -53,11 +53,14 @@ const Users = () => {
     useEffect(() => {
         const getProducts = async () => {
             try {
-                const res = await axios.get('http://localhost:4000/api/user/', {
-                    headers: {
-                        authorization: `Bearer ${token}`,
-                    },
-                });
+                const res = await axios.get(
+                    'https://nammi-clothing-api.herokuapp.com/api/user/',
+                    {
+                        headers: {
+                            authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
                 setUsers(res.data);
             } catch (err) {}
         };
@@ -67,7 +70,7 @@ const Users = () => {
     const makeAdmin = async (id) => {
         try {
             await axios.put(
-                `http://localhost:4000/api/user/${id}/update`,
+                `https://nammi-clothing-api.herokuapp.com/api/user/${id}/update`,
                 { isAdmin: true },
                 {
                     headers: {
@@ -82,11 +85,14 @@ const Users = () => {
 
     const deleteUser = async (id) => {
         try {
-            await axios.delete(`http://localhost:4000/api/user/${id}/delete`, {
-                headers: {
-                    authorization: `Bearer ${token}`,
-                },
-            });
+            await axios.delete(
+                `https://nammi-clothing-api.herokuapp.com/api/user/${id}/delete`,
+                {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
+                }
+            );
             alert(`User Deleted`);
             window.location.reload();
         } catch (error) {}

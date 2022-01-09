@@ -98,7 +98,7 @@ const UpdateProduct = () => {
         const getProduct = async () => {
             try {
                 const res = await axios.get(
-                    `http://localhost:4000/api/products/find/${id}`
+                    `https://nammi-clothing-api.herokuapp.com/api/products/find/${id}`
                 );
                 setProduct(res.data);
             } catch {}
@@ -109,7 +109,7 @@ const UpdateProduct = () => {
     const handleSubmit = async (e) => {
         try {
             axios.put(
-                `http://localhost:4000/api/products/${id}/update`,
+                `https://nammi-clothing-api.herokuapp.com/api/products/${id}/update`,
                 state,
                 {
                     headers: {
@@ -126,7 +126,7 @@ const UpdateProduct = () => {
         if (inStock) {
             try {
                 axios.put(
-                    `http://localhost:4000/api/products/${id}/update`,
+                    `https://nammi-clothing-api.herokuapp.com/api/products/${id}/update`,
                     { inStock: false },
                     {
                         headers: {
@@ -140,7 +140,7 @@ const UpdateProduct = () => {
         } else {
             try {
                 axios.put(
-                    `http://localhost:4000/api/products/${id}/update`,
+                    `https://nammi-clothing-api.herokuapp.com/api/products/${id}/update`,
                     { inStock: true },
                     {
                         headers: {

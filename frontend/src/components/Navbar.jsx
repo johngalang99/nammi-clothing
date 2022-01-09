@@ -53,7 +53,7 @@ const Navbar = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('isAdmin');
         localStorage.removeItem('userId');
-        window.location.href = 'http://localhost:3000/login';
+        window.location.href = 'https://nammi-clothing-api.herokuapp.com/login';
     };
 
     const [badge, setBadge] = useState('');
@@ -63,7 +63,7 @@ const Navbar = () => {
             const updateBadge = async () => {
                 try {
                     const res = await axios.get(
-                        `http://localhost:4000/api/cart/${userId}`,
+                        `https://nammi-clothing-api.herokuapp.com/api/cart/${userId}`,
                         {
                             headers: {
                                 authorization: `Bearer ${token}`,

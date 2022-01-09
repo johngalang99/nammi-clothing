@@ -11,10 +11,15 @@ const cors = require('cors');
 
 dotenv.config();
 
-mongoose
-    .connect(process.env.MONGO_URL)
-    .then(() => console.log('Connected to Database!'))
-    .catch((err) => console.log(err));
+const url = process.env.MONGO_URL;
+mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => console.log('Connected to database'));
 
 app.use(express.json());
 app.use(cors());

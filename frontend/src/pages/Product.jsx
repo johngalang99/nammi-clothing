@@ -132,7 +132,7 @@ const Product = () => {
         const getProduct = async () => {
             try {
                 const res = await axios.get(
-                    `http://localhost:4000/api/products/find/${id}`
+                    `https://nammi-clothing-api.herokuapp.com/api/products/find/${id}`
                 );
                 setProduct(res.data);
             } catch {}
@@ -148,7 +148,7 @@ const Product = () => {
             alert(`Please complete product details before adding to cart`);
         } else {
             await axios.post(
-                `http://localhost:4000/api/cart/add/${userId}`,
+                `https://nammi-clothing-api.herokuapp.com/api/cart/add/${userId}`,
                 addItem,
                 {
                     headers: {

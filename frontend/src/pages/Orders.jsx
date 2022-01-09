@@ -123,7 +123,7 @@ const Order = () => {
         const getOrder = async () => {
             try {
                 const res = await axios.get(
-                    `http://localhost:4000/api/order/${id}`,
+                    `https://nammi-clothing-api.herokuapp.com/api/order/${id}`,
                     {
                         headers: {
                             authorization: `Bearer ${token}`,
@@ -142,7 +142,7 @@ const Order = () => {
         if (!isDelivered) {
             try {
                 axios.put(
-                    `http://localhost:4000/api/order/${_id}/update`,
+                    `https://nammi-clothing-api.herokuapp.com/api/order/${_id}/update`,
                     { isDelivered: true },
                     {
                         headers: {
@@ -151,16 +151,18 @@ const Order = () => {
                     }
                 );
                 alert(`Order Received!`);
-                console.log(order);
                 window.location.reload();
             } catch (error) {}
         } else {
             try {
-                axios.delete(`http://localhost:4000/api/order/${_id}/delete`, {
-                    headers: {
-                        authorization: `Bearer ${token}`,
-                    },
-                });
+                axios.delete(
+                    `https://nammi-clothing-api.herokuapp.com/api/order/${_id}/delete`,
+                    {
+                        headers: {
+                            authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
                 alert(`Order Deleted`);
                 window.location.reload();
             } catch (error) {
@@ -168,6 +170,8 @@ const Order = () => {
             }
         }
     };
+
+    console.log(orders);
 
     if (loading) {
         return `loading...`;

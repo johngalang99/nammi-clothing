@@ -78,7 +78,10 @@ const Login = () => {
             alert(`Please input credentials`);
         } else
             axios
-                .post('http://localhost:4000/api/auth/login', state)
+                .post(
+                    'https://nammi-clothing-api.herokuapp.com/api/auth/login',
+                    state
+                )
                 .then((res) => {
                     const { _id, isAdmin, token } = res.data;
                     localStorage.setItem('isAdmin', isAdmin);

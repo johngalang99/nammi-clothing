@@ -90,7 +90,10 @@ const Register = () => {
             alert(`Password did not match.`);
         } else
             axios
-                .post('http://localhost:4000/api/auth/register', state)
+                .post(
+                    'https://nammi-clothing-api.herokuapp.com/api/auth/register',
+                    state
+                )
                 .then((data) => {
                     if (data.status === 201) {
                         window.location.href = 'http://localhost:3000/login';

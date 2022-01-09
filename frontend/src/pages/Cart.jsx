@@ -160,7 +160,7 @@ const Cart = () => {
             if (token) {
                 try {
                     const res = await axios.get(
-                        `http://localhost:4000/api/cart/${id}`,
+                        `https://nammi-clothing-api.herokuapp.com/api/cart/${id}`,
                         {
                             headers: {
                                 authorization: `Bearer ${token}`,
@@ -177,7 +177,7 @@ const Cart = () => {
 
     const handleCheckOut = async (e) => {
         const checkOut = await axios.post(
-            `http://localhost:4000/api/order/${userId}/checkout`,
+            `https://nammi-clothing-api.herokuapp.com/api/order/${userId}/checkout`,
             {},
             {
                 headers: {
@@ -218,6 +218,7 @@ const Cart = () => {
                 </Top>
                 <Bottom>
                     <Info>
+                        {cart === null && <Title>Your cart is empty.</Title>}
                         {cart?.products?.map((product) => (
                             <Product key={product._id}>
                                 <ProductDetails>
@@ -237,11 +238,11 @@ const Cart = () => {
                                 </ProductDetails>
                                 <PriceDetail>
                                     <ProductAmountContainer>
-                                        <Add />
+                                        <Remove />
                                         <ProductAmount>
                                             {product.quantity}
                                         </ProductAmount>
-                                        <Remove />
+                                        <Add />
                                     </ProductAmountContainer>
                                     <ProductPrice>
                                         Php {product.price}

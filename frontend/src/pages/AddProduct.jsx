@@ -85,11 +85,15 @@ const AddProduct = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-            .post('http://localhost:4000/api/products/create', state, {
-                headers: {
-                    authorization: `Bearer ${token}`,
-                },
-            })
+            .post(
+                'https://nammi-clothing-api.herokuapp.com/api/products/create',
+                state,
+                {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
+                }
+            )
             .then((data) => {
                 if (data.status === 200) {
                     alert(`Product Added`);
